@@ -33,11 +33,16 @@ export default class App extends Component {
     var addedItem = newCart.find(c => c.product.id === product.id);
 
     if (addedItem) {
-      addedItem.quatity += 1;
+      addedItem.quantity += 1;
     } else {
-      newCart.push({ product: product, quatity: 1 });
+      newCart.push({ product: product, quantity: 1 });
     }
 
+    this.setState({ cart: newCart });
+  };
+
+  removeFromCart = product => {
+    let newCart = this.state.cart.filter(c => c.product.id !== product.id);
     this.setState({ cart: newCart });
   };
 
@@ -48,7 +53,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <Container>
-          <Navi cart={this.state.cart}></Navi>
+          <Navi removeFromCart={this.removeFromCart} cart={this.state.cart}></Navi>
           <Row>
             <Col xs="3">
               <CategoryList
